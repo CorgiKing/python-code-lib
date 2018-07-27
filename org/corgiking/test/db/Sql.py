@@ -1,12 +1,12 @@
 #coding=utf-8
 
-import MySQLdb
+import pymysql
 
-print 'hello!'
+print ('hello!')
 
 
-db = MySQLdb.connect("192.168.0.106","dataview",'''view2{:>}"?3''',"chaos_formal")
-db2 = MySQLdb.connect("localhost","yy",'''123456''',"test")
+db = pymysql.connect("192.168.0.106","dataview",'''view2{:>}"?3''',"chaos_formal")
+db2 = pymysql.connect("localhost","yy",'''123456''',"test")
 
 cur = db.cursor()
 cur2 = db2.cursor()
@@ -32,9 +32,9 @@ for r in res:
     if i == 1:
         i+=1
         continue
-    print "第%d条/总共%d条" % (i,len(res))
+    print ("第%d条/总共%d条" % (i,len(res)))
     i+=1
-    print r
+    print (r)
     cur.execute('''
     SELECT
         store_id,
@@ -55,7 +55,7 @@ for r in res:
     ''' % r[0])
     data = cur.fetchone()
     
-    print data
+    print (data)
     if data is not None and len(data) == 5:
         sql = '''
         INSERT INTO `data` (
@@ -68,38 +68,12 @@ for r in res:
         VALUES
             ('%s', '%s', '%s', '%s', '%s');
         ''' % (data[0],data[1],data[2],data[3],data[4])
-        print sql
+        print (sql)
         cur2.execute(sql)
         db2.commit()
              
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-print "end"
+print ("end")
 # raw_input("Press <enter> exit!")
 # exit()

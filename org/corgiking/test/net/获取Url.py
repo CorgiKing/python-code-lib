@@ -1,12 +1,12 @@
 #coding=utf-8
 import urllib
 import re
-import MySQLdb
+import pymysql
 
 str = "http://top.chinaz.com/hangye/"
 
 def getHtml(url):
-    page = urllib.urlopen(url)
+    page = urllib.request.urlopen(url)
     html = page.read()
     return html
 	
@@ -35,11 +35,11 @@ def findUrls(html,num):
 		html = getHtml(url)
 		allUrls.extend(getUrls(html))
 		
-	print len(allUrls)
+	print (len(allUrls))
 	return allUrls
 	
 def saveDb(urls,num):
-	conn = MySQLdb.connect(host='192.168.4.170', port=3306, user='', passwd='', db='')
+	conn = pymysql.connect(host='192.168.4.170', port=3306, user='', passwd='', db='')
 	cursor = conn.cursor()
 	cursor.execute("truncate table t_ping_net")
 	sql = "insert into t_ping_net(domain_name) values(%s)"
@@ -55,7 +55,7 @@ def saveDb(urls,num):
 html = getHtml(str + "index.html")
 urls = findUrls(html,100)
 for i in urls:
-	print i
+	print (i)
 saveDb(urls,100)
 	
 
@@ -64,4 +64,6 @@ saveDb(urls,100)
 	
 
 
-raw_input("Press <enter>")
+input("Press <enter> exit!")
+exit()
+
